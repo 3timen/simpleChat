@@ -199,9 +199,12 @@ public class ClientConsole implements ChatIF
     {
       port = DEFAULT_PORT;
     }
-
-
     ClientConsole chat= new ClientConsole(id, host, port);
+    while(!chat.client.isConnected()) {
+    	System.out.println("Awaiting commands !");
+    	chat.accept();
+    }
+    
     chat.accept();  //Wait for console data
   }
 }
