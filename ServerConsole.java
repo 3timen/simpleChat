@@ -4,11 +4,11 @@ import common.ChatIF;
 public class ServerConsole implements ChatIF {
 	
 	final public static int DEFAULT_PORT =5555;
-	private EchoServer server;
+	private static EchoServer server;
 	private Scanner console;
 	
 	public ServerConsole(int port) {
-		this.server = new EchoServer(port);
+		this.server = new EchoServer(port, this);
 		this.console = new Scanner(System.in);
 	}
 	
@@ -80,7 +80,7 @@ public class ServerConsole implements ChatIF {
 	public void display(String message) {
 		System.out.println("SERVER MSG > "+ message);
 	}
-
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int port;
@@ -93,6 +93,14 @@ public class ServerConsole implements ChatIF {
 	      port = DEFAULT_PORT;
 	    }
 	    ServerConsole chat= new ServerConsole(port);
+	    try 
+	    {
+	      server.listen(); //Start listening for connections
+	    } 
+	    catch (Exception ex) 
+	    {
+	      System.out.println("ERROR - Could not listen for clients!");
+	    }
 	    chat.accept();  //Wait for console data
 	}
 

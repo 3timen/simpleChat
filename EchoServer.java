@@ -3,6 +3,7 @@
 // license found at www.lloseng.com 
 
 import java.io.*;
+import common.ChatIF;
 import java.util.Scanner;
 import ocsf.server.*;
 
@@ -25,6 +26,8 @@ public class EchoServer extends AbstractServer
    */
   final public static int DEFAULT_PORT = 5555;
   
+  ChatIF sc;
+  
   //Constructors ****************************************************
   
   /**
@@ -32,9 +35,11 @@ public class EchoServer extends AbstractServer
    *
    * @param port The port number to connect on.
    */
-  public EchoServer(int port) 
+  public EchoServer(int port, ChatIF chat) 
   {
     super(port);
+    sc = chat;
+    
   }
 
   
@@ -57,17 +62,16 @@ public class EchoServer extends AbstractServer
 				client.sendToClient("Login deja fourni !");
 				client.close();
 			} catch (Exception e) {
-				System.out.println("Error: Could not close the connection !");
+				sc.display("Error: Could not close the connection !");
 			}
 		}
 		String id = token.substring(token.indexOf('<')+1,
 									token.indexOf('>'));
 		client.setInfo("login", id);
-		return;
+		
 	}
 	
-    System.out.println("Message received: " + msg + " from " + client);
-    sendToAllClients(client.getInfo("login")+": >");
+    System.out.println("Message received: " + msg + " from " + client.getInfo("login"));
     this.sendToAllClients(msg);
   }
     
@@ -77,7 +81,7 @@ public class EchoServer extends AbstractServer
    */
   protected void serverStarted()
   {
-    System.out.println
+    sc.display
       ("Server listening for connections on port " + getPort());
   }
   
@@ -87,16 +91,16 @@ public class EchoServer extends AbstractServer
    */
   protected void serverStopped()
   {
-    System.out.println
+    sc.display
       ("Server has stopped listening for connections.");
   }
   
   public void clientDisconnected(ConnectionToClient client) {
-	  System.out.println("Client disconnected !");
+	  sc.display("Client disconnected !");
   }
   
   public void clientConnected(ConnectionToClient client) {
-	  System.out.println("Client connected !");
+	  sc.display("Client connected !");
 	  
   }
     
@@ -109,29 +113,29 @@ public class EchoServer extends AbstractServer
    * @param args[0] The port number to listen on.  Defaults to 5555 
    *          if no argument is entered.
    */
-  public static void main(String[] args) 
-  {
-    int port = 0; //Port to listen on
-
-    try
-    {
-      port = Integer.parseInt(args[0]); //Get port from command line
-    }
-    catch(Throwable t)
-    {
-      port = DEFAULT_PORT; //Set port to 5555
-    }
-	
-    EchoServer sv = new EchoServer(port);
-    
-    try 
-    {
-      sv.listen(); //Start listening for connections
-    } 
-    catch (Exception ex) 
-    {
-      System.out.println("ERROR - Could not listen for clients!");
-    }
-  }
+//  public static void main(String[] args) 
+//  {
+//    int port = 0; //Port to listen on
+//
+//    try
+//    {
+//      port = Integer.parseInt(args[0]); //Get port from command line
+//    }
+//    catch(Throwable t)
+//    {
+//      port = DEFAULT_PORT; //Set port to 5555
+//    }
+//	
+//    EchoServer sv = new EchoServer(port);
+//    
+//    try 
+//    {
+//      sv.listen(); //Start listening for connections
+//    } 
+//    catch (Exception ex) 
+//    {
+//      System.out.println("ERROR - Could not listen for clients!");
+//    }
+//  }
 }
 //End of EchoServer class
