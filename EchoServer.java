@@ -52,7 +52,7 @@ public class EchoServer extends AbstractServer
 	Scanner scanner = new Scanner((String) msg);
 	String token = scanner.next();
 	if (token.charAt(0) == '#') {
-		if (client.getInfo("login")==null) {
+		if (client.getInfo("login")!=null) {
 			try {
 				client.sendToClient("Login deja fourni !");
 				client.close();
