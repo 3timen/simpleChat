@@ -174,12 +174,18 @@ public class ClientConsole implements ChatIF
   public static void main(String[] args) 
   {
     String host = "";
+    String id = "";
     int port;
     Scanner scanner = new Scanner(System.in);
-
+    try {
+    	id = args[0];
+    } catch (ArrayIndexOutOfBoundsException e) {
+    	System.out.println("Error - no login ID specified.");
+    	return;
+    }
     try
     {
-      host = args[0];
+      host = args[1];
     }
     catch(ArrayIndexOutOfBoundsException e)
     {
@@ -187,14 +193,13 @@ public class ClientConsole implements ChatIF
     }
     try
     {
-      port = Integer.parseInt(args[1]);
+      port = Integer.parseInt(args[2]);
     }
     catch(ArrayIndexOutOfBoundsException e)
     {
       port = DEFAULT_PORT;
     }
-    System.out.print("Veuiilez fournir votre identifiant de connexion: ");
-    String id =scanner.next();
+
 
     ClientConsole chat= new ClientConsole(id, host, port);
     chat.accept();  //Wait for console data
