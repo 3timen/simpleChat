@@ -103,7 +103,7 @@ public class ChatClient extends AbstractClient
    * @Override
    * */
   public void connectionClosed() {
-	  clientUI.display("Le serveur est a l'arret !");
+	  clientUI.display("Connexion rompu !");
   }
 }
 //End of ChatClient class

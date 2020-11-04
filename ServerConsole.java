@@ -70,9 +70,11 @@ public class ServerConsole implements ChatIF {
 			 return;
 		 }
 		if (token.substring(0, 8).equals("#setport")) {
-			 int port = Integer.parseInt(token.substring(token.indexOf('<')
+			 int port = Integer.parseInt(token.substring(token.indexOf('<')+1
 						, token.indexOf('>')));
 			 server.setPort(port);
+			 System.out.println("Port set to: "+Integer.toString(port));
+			 System.out.println("Please close and start the server again !");
 			 return;			
 		 }
 	}

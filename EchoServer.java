@@ -96,11 +96,11 @@ public class EchoServer extends AbstractServer
   }
   
   public void clientDisconnected(ConnectionToClient client) {
-	  sc.display("Client disconnected !");
+	  sc.display("Client "+client.getInfo("login")+" disconnected !");
   }
   
   public void clientConnected(ConnectionToClient client) {
-	  sc.display("Client connected !");
+	  sc.display("Client "+client.getInfo("login")+" connected !");
 	  
   }
     

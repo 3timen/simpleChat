@@ -113,6 +113,7 @@ public class ClientConsole implements ChatIF
 	 }
 	 if (token.equals("#logoff")) {
 		 try {
+			 client.sendToServer("disconnecting !");
 			 client.closeConnection();
 		 } catch (Exception e) {
 			 System.out.println("We are unable to log you off");
@@ -200,12 +201,10 @@ public class ClientConsole implements ChatIF
       port = DEFAULT_PORT;
     }
     ClientConsole chat= new ClientConsole(id, host, port);
+	chat.accept();
     while(!chat.client.isConnected()) {
     	System.out.println("Awaiting commands !");
-    	chat.accept();
     }
-    
-    chat.accept();  //Wait for console data
   }
 }
 //End of ConsoleChat class
