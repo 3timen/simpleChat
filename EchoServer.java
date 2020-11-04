@@ -52,9 +52,18 @@ public class EchoServer extends AbstractServer
 	Scanner scanner = new Scanner((String) msg);
 	String token = scanner.next();
 	if (token.charAt(0) == '#') {
+		if (client.getInfo("login")==null) {
+			try {
+				client.sendToClient("Login deja fourni !");
+				client.close();
+			} catch (Exception e) {
+				System.out.println("Error: Could not close the connection !");
+			}
+		}
 		String id = token.substring(token.indexOf('<')+1,
 									token.indexOf('>'));
 		client.setInfo("login", id);
+		return;
 	}
 	
     System.out.println("Message received: " + msg + " from " + client);
