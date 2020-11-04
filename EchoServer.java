@@ -3,6 +3,7 @@
 // license found at www.lloseng.com 
 
 import java.io.*;
+import java.util.Scanner;
 import ocsf.server.*;
 
 /**
@@ -48,7 +49,16 @@ public class EchoServer extends AbstractServer
   public void handleMessageFromClient
     (Object msg, ConnectionToClient client)
   {
+	Scanner scanner = new Scanner((String) msg);
+	String token = scanner.next();
+	if (token.charAt(0) == '#') {
+		String id = token.substring(token.indexOf('<')+1,
+									token.indexOf('>'));
+		client.setInfo("login", id);
+	}
+	
     System.out.println("Message received: " + msg + " from " + client);
+    sendToAllClients(client.getInfo("login")+": >");
     this.sendToAllClients(msg);
   }
     
@@ -72,6 +82,15 @@ public class EchoServer extends AbstractServer
       ("Server has stopped listening for connections.");
   }
   
+  public void clientDisconnected(ConnectionToClient client) {
+	  System.out.println("Client disconnected !");
+  }
+  
+  public void clientConnected(ConnectionToClient client) {
+	  System.out.println("Client connected !");
+	  
+  }
+    
   //Class methods ***************************************************
   
   /**
